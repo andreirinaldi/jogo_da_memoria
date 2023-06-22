@@ -129,19 +129,19 @@ const movesCounter = () => {
   movesCount += 1;
   moves.innerHTML = `<span>Movimentos:</span>${movesCount}`;
 };
-//setando pagina inicial
-game.style.display = 'block';
+//para o tabuleiro não aparecer na tela inicial
+game.classList.add("hide");
 
 //-------------------------------------------GAME 01-------------------------------------------
 //Escolhendo objetos aleatórios da matriz de itens
-const generateRandom = (size = 6) => { //(aqui aumenta tamanho)
+const generateRandom = (size = tamanho) => {
   //Array temporário
   let tempArray = [...items['adventure']];
   //Iniciar cardValues array
   let cardValues = [];
   //Tamanho deve ser duplo (matriz 4*4)/2 pois existiriam pares de objetos
   size = (size * size) / 2;
-  //Random object selection
+  //Seleção de random object
   for (let i = 0; i < size; i++) {
     const randomIndex = Math.floor(Math.random() * tempArray.length);
     cardValues.push(tempArray[randomIndex]);
@@ -150,7 +150,16 @@ const generateRandom = (size = 6) => { //(aqui aumenta tamanho)
   }
   return cardValues;
 };
-const matrixGenerator = (cardValues, size = 6) => { //(aqui aumenta tamanho)
+//Tamanho do tabuleiro (4x4) ou (6x6) dependendo da tela
+let tamanho = 0;
+$(window).on('load', function() {
+  if (window.screen.width < 800) { 
+    tamanho = 4
+  } else {
+    tamanho = 6
+  }
+});
+const matrixGenerator = (cardValues, size = tamanho) => {
   gameContainer.innerHTML = "";
   cardValues = [...cardValues, ...cardValues];
   //Embaralhamento simples
@@ -184,7 +193,7 @@ const matrixGenerator = (cardValues, size = 6) => { //(aqui aumenta tamanho)
         if (!firstCard) {
           //Então o cartão atual se tornará o primeiroCartão
           firstCard = card;
-          //current cards value becomes firstCardValue
+          //o valor atual das cartas se torna firstCardValue
           firstCardValue = card.getAttribute("data-card-value");
         } else {
           //movimentos de incremento quandoe o usuário selecionar o segundo cartão
@@ -247,7 +256,7 @@ startGame1.addEventListener("click", () => {
 });
 
 //-------------------------------------------GAME 02-------------------------------------------
-const generateRandom2 = (size = 6) => { //(aqui aumenta tamanho)
+const generateRandom2 = (size = tamanho) => {
   let tempArray2 = [...items['pokemon']];
   let cardValues2 = [];
   size = (size * size) / 2;
@@ -277,7 +286,7 @@ startGame2.addEventListener("click", () => {
 });
 
 //-------------------------------------------GAME 03-------------------------------------------
-const generateRandom3 = (size = 6) => { //(aqui aumenta tamanho)
+const generateRandom3 = (size = tamanho) => {
   let tempArray3 = [...items['lol']];
   let cardValues3 = [];
   size = (size * size) / 2;
@@ -307,7 +316,7 @@ startGame3.addEventListener("click", () => {
 });
 
 //-------------------------------------------GAME 04-------------------------------------------
-const generateRandom4 = (size = 6) => { //(aqui aumenta tamanho)
+const generateRandom4 = (size = tamanho) => {
   let tempArray4 = [...items['marvel']];
   let cardValues4 = [];
   size = (size * size) / 2;
